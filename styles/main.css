@@ -1,0 +1,292 @@
+/* custom property */
+:root {
+	--accent-color: #800000;  /* could also be coded #800 */
+	--gradient-color: #f6bb73;
+	--light-menu-color: #fff;
+	--mid-menu-color: #f5deb3; /* antique white */
+	--dark-menu-color: #800000;
+}
+
+/* reset */
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+/* default styles (Mobile-First) */
+body {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: calc(15px + .2vw);
+	width: min(80%, 1024px);
+	line-height: 1.5;
+	margin: auto;
+	border: 2px solid var(--accent-color);
+}
+h1, h2, h3, p {
+	padding: .25em 0;
+}
+a:hover, a:focus {
+	font-style: italic;
+	color: var(--accent-color);
+}
+h1 {
+	font-size: 150%;
+}
+h2 {
+	font-size: 130%;
+	color: var(--accent-color);
+}
+h3 {
+	font-size: 105%;
+}
+ul {
+	margin-left: 2em;
+	list-style-type: circle;
+}
+
+/* the styles for the header (Mobile-First) */
+header {
+	line-height: 1.2;
+	text-align: center;
+	border-bottom: 2px solid var(--accent-color);
+	background-image: linear-gradient(
+	    30deg, var(--gradient-color) 0%, white 30%, white 65%, var(--gradient-color) 100%);
+	& h2 {
+		font-size: 175%;
+		padding: .5em 0 0 0;
+	}
+	& h3 {
+		font-size: 130%;
+		font-style: italic;
+		padding-bottom: 1em;
+	}
+	& img {
+		display: none;
+	}
+}
+
+/* the styles for the navigation menu & submenus (Mobile-First) */
+.navbar {
+	position: relative;
+	background-color: var(--accent-color);
+	& ul {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+	& a {
+		display: block;
+		padding: 1em;
+		margin: 0 2px 2px 0;
+		text-decoration: none;
+		color: var(--light-menu-color);
+	}
+	& a:hover, & a:focus, & .current {
+		background-color: var(--mid-menu-color);
+		color: var(--dark-menu-color);
+	}
+}
+
+.menu {
+	position: absolute;
+	left: 0;
+	background-color: var(--accent-color);
+	width: 40%;
+	display: none;
+	z-index: 100;
+}
+
+.menu-btn {
+	display: block;
+	padding: 0.75em 1em;
+	color: var(--light-menu-color);
+	font-size: 150%;
+	cursor: pointer;
+	&::after {
+		content: "\2630"; /* hamburger icon */
+	}
+}
+
+#menu-toggle {
+	display: none;
+}
+
+#menu-toggle:checked ~ .menu {
+	display: block;
+}
+
+#menu-toggle:checked + .menu-btn::after {
+	content: "\2715"; /* close (X) icon */
+}
+
+.menu > li:has(.submenu) {
+	position: relative;
+	& > a::after {
+		content: " \25b8"; /* right-pointing triangle */
+		margin-left: 0.5em;
+	}
+	&:hover .submenu {
+		display: block;
+	}
+}
+
+.submenu {
+	position: absolute;
+	top: 0;
+	left: 100%;
+	width: 100%;
+	background-color: var(--accent-color);
+	color: var(--light-menu-color);
+	display: none;
+	z-index: 100;
+	& li a {
+		margin: 2px;
+	}
+}
+
+/* the styles for the main content (Mobile-First) */
+main {
+	display: flex;
+	flex-direction: column-reverse;
+	clear: left;
+	padding: 0 1em 1em;
+	& blockquote {
+		font-style: italic;
+		padding-left: 1em;
+	}
+	& h3 + img { /* speaker images */
+		width: clamp(40px, 50%, 75px);
+		border: 4px double var(--accent-color);
+		border-radius: 10px;
+	}
+}
+
+/* the styles for the section (Mobile-First) */
+section {
+	padding-left: .5em;
+	border-bottom: 2px solid var(--accent-color);
+	padding-bottom: 1em;
+	margin-bottom: 0.5em;
+	& img {
+		width: clamp(100px, 50%, 250px);
+		float: right;
+		margin: 0 1em .25em;
+	}
+}
+
+/* the styles for the aside (Mobile-First) */
+aside {
+	padding-right: .5em;
+}
+
+/* the styles for the footer */
+footer {
+	background-color: var(--accent-color);
+	& p {
+		text-align: center;
+		color: white;
+		padding: 1em 0;
+	}
+}
+
+/* CSS class */
+.featured {
+	border-top: 2px solid var(--accent-color);
+	border-bottom: 2px solid var(--accent-color);
+	padding: .5em 0 1em;
+}
+.speaker {
+	& h1 {
+		color: var(--accent-color);
+	}
+	& h2 {
+		color: black;
+	}
+	& p {
+		padding: .5em 0; 
+	}	
+}
+.large {
+	font-size: 125%;
+}
+
+/* =========================================================
+   Media Queries (Mobile-First Breakpoints)
+   ========================================================= */
+
+/* Breakpoint 1: Header Logo & Alignment */
+@media (min-width: 576px) {
+	header {
+		text-align: left;
+		& img {
+			display: block;
+			width: clamp(40px, 15%, 80px);
+			float: left;
+			margin: .75em 1em;
+		}
+	}
+}
+
+/* Breakpoint 2: Full Horizontal Navigation Menu */
+@media (min-width: 768px) {
+	.menu-btn {
+		display: none;
+	}
+	.navbar {
+		& a {
+			margin: 0 1px 2px 1px;
+		}
+	}
+	.menu,
+	#menu-toggle:checked ~ .menu {
+		display: flex;
+		position: relative;
+		width: 100%;
+		& > li {
+			flex-basis: 20%;
+			text-align: center;
+		}
+	}
+	.menu > li:first-child a {
+		margin-left: 0;
+	}
+	.menu > li:last-child a {
+		margin-right: 0;
+	}
+	.menu > li:has(.submenu) {
+		position: relative;
+		& > a::after {
+			content: " \25be"; /* down-pointing triangle */
+			margin-left: 0.5em;
+		}
+		&:hover .submenu {
+			display: block;
+		}
+	}
+	.submenu {
+		top: auto;
+		left: 0;
+		right: 0;
+		width: auto;
+		& li a {
+			margin: 0 2px 2px;
+		}
+	}
+}
+
+/* Breakpoint 3: Two-Column Main Layout */
+@media (min-width: 900px) {
+	main {
+		flex-direction: row;
+	}
+	section {
+		flex-basis: 75%;
+		border-bottom: none;
+		padding-bottom: 0;
+		margin-bottom: 0;
+	}
+	aside {
+		flex-basis: 25%;
+	}
+}
